@@ -1,5 +1,6 @@
 package kr.hs.dgsw.weathermap.presentation.view
 
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.TextView
@@ -24,8 +25,18 @@ class MainWeatherAdapter : ListAdapter<WeatherResponse, MainWeatherAdapter.Weath
         fun bind(weather: WeatherResponse) {
             binding.weather = weather
             val temp = (((weather.main.temp - 273.15) * 100).roundToInt() / 100F).toString()
-            binding.root.findViewById<TextView>(R.id.tv_item_main_temp).text = this.itemView.resources.getString(R.string.temp, temp)
-            binding.root.findViewById<TextView>(R.id.tv_item_current_weather).text = weather.weather[0].description
+            binding.tvItemMainTemp.text = this.itemView.resources.getString(R.string.temp, temp)
+            binding.tvItemCurrentWeather.text = weather.weather[0].description
+            val value = ((weather.main.temp - 273.15) * 100).roundToInt() / 100F
+            val color = when {
+                value >= 30 -> "#964130"
+                value < 30 && value >= 25 -> "#ccbb66"
+                value < 25 && value >= 15 -> "#9bc9b8"
+                value < 15 && value >= 0 -> "#9bb8c9"
+                value < 0 -> "#ffffff"
+                else -> "#0xF0F0F0"
+            }
+            binding.layoutCard.setBackgroundColor(Color.parseColor(color))
             binding.root.setOnLongClickListener {
                 clickEvent.value = weather
                 return@setOnLongClickListener true

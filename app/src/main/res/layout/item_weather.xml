@@ -20,6 +20,7 @@
         app:cardElevation="3dp">
 
         <LinearLayout
+            android:id="@+id/layout_card"
             android:layout_width="380dp"
             android:layout_height="220dp"
             android:background="#FFF0F0F0"
